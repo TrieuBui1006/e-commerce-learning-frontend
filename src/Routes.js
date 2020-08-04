@@ -10,6 +10,7 @@ import Dashboard from './user/UserDashboard'
 import AdminDashboard from './user/AdminDashboard'
 import AddCategory from './admin/AddCategory'
 import AddProduct from './admin/AddProduct'
+import shop from './core/Shop'
 
 const Routes = () => {
   return (
@@ -19,6 +20,7 @@ const Routes = () => {
           <Route path="/" exact component={Home} />
           <Route path="/signin" exact component={Signin} />
           <Route path="/signup" exact component={Signup} />
+          <Route path="/shop" exact component={shop} />
           <AdminRoute
             path="/admin/dashboard"
             exact
