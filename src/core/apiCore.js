@@ -11,10 +11,13 @@ export const getProducts = (sortBy) => {
 }
 
 export const getFilteredProducts = async (skip, limit, filters = {}) => {
-  const data = { limit, skip, filters }
-
+  const data = {
+    limit,
+    skip,
+    filters,
+  }
   try {
-    const res = await fetch(`${API}/products/by/search`, {
+    const response = await fetch(`${API}/products/by/search`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -22,7 +25,7 @@ export const getFilteredProducts = async (skip, limit, filters = {}) => {
       },
       body: JSON.stringify(data),
     })
-    return res.json()
+    return response.json()
   } catch (err) {
     console.log(err)
   }

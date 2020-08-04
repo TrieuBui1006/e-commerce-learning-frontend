@@ -16,6 +16,7 @@ const Shop = () => {
   const [error, setError] = useState(false)
   const [limit, setLimit] = useState(6)
   const [skip, setSkip] = useState(0)
+  const [size, setSize] = useState(0)
   const [filteredResults, setFilteredResults] = useState([])
 
   const init = () => {
@@ -28,14 +29,42 @@ const Shop = () => {
     })
   }
 
-  const loadFilteredResults = (newFilter) => {
-    getFilteredProducts(skip, limit, newFilter).then((data) => {
+  const loadFilteredResults = (newFilters) => {
+    // console.log(newFilters);
+    getFilteredProducts(skip, limit, newFilters).then((data) => {
       if (data.error) {
         setError(data.error)
       } else {
         setFilteredResults(data.data)
+        setSize(data.size)
+        setSkip(0)
       }
     })
+  }
+
+  const loadMore = () => {
+    let toSkip = skip + limit
+    // console.log(newFilters);
+    getFilteredProducts(toSkip, limit, myFilters.filters).then((data) => {
+      if (data.error) {
+        setError(data.error)
+      } else {
+        setFilteredResults([...filteredResults, ...data.data])
+        setSize(data.size)
+        setSkip(toSkip)
+      }
+    })
+  }
+
+  const loadMoreButton = () => {
+    return (
+      size > 0 &&
+      size >= limit && (
+        <button onClick={loadMore} className="btn btn-warning mb-5">
+          Load more
+        </button>
+      )
+    )
   }
 
   useEffect(() => {
@@ -45,17 +74,15 @@ const Shop = () => {
   }, [])
 
   const handleFilters = (filters, filterBy) => {
-    // console.log('SHOP', filters, filterBy)
-    const newFilter = { ...myFilters }
-    newFilter.filters[filterBy] = filters
+    const newFilters = { ...myFilters }
+    newFilters.filters[filterBy] = filters
 
     if (filterBy === 'price') {
       let priceValues = handlePrice(filters)
-      newFilter.filters[filterBy] = priceValues
+      newFilters.filters[filterBy] = priceValues
     }
-
     loadFilteredResults(myFilters.filters)
-    setMyFilters(newFilter)
+    setMyFilters(newFilters)
   }
 
   const handlePrice = (value) => {
@@ -102,6 +129,8 @@ const Shop = () => {
               <Card product={product} key={i} />
             ))}
           </div>
+          <hr />
+          {loadMoreButton()}
         </div>
       </div>
     </Layout>
