@@ -186,6 +186,13 @@ const AddProduct = () => {
         <h2>Loading...</h2>
       </div>
     )
+  const goBack = (
+    <div className="mt-5">
+      <Link className="text-warning" to="/admin/dashboard">
+        Back to Dashboard
+      </Link>
+    </div>
+  )
 
   return (
     <Layout
@@ -197,6 +204,7 @@ const AddProduct = () => {
           {showLoading()}
           {showSuccess()}
           {showError()}
+          {goBack}
           {newPostForm()}
         </div>
       </div>
