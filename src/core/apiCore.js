@@ -1,13 +1,18 @@
 import { API } from '../config'
+import queryString from 'query-string'
 
-export const getProducts = (sortBy) => {
-  return fetch(`${API}/products?sortBy=${sortBy}&order=desc&limit=6`, {
-    method: 'GET',
-  })
-    .then((response) => {
-      return response.json()
-    })
-    .catch((err) => console.log(err))
+export const getProducts = async (sortBy) => {
+  try {
+    const response = await fetch(
+      `${API}/products?sortBy=${sortBy}&order=desc&limit=6`,
+      {
+        method: 'GET',
+      }
+    )
+    return response.json()
+  } catch (err) {
+    return console.log(err)
+  }
 }
 
 export const getFilteredProducts = async (skip, limit, filters = {}) => {
@@ -28,5 +33,19 @@ export const getFilteredProducts = async (skip, limit, filters = {}) => {
     return response.json()
   } catch (err) {
     console.log(err)
+  }
+}
+
+export const list = async (params) => {
+  const query = queryString.stringify(params)
+  console.log('query', query)
+
+  try {
+    const response = await fetch(`${API}/products?${query}`, {
+      method: 'GET',
+    })
+    return response.json()
+  } catch (err) {
+    return console.log(err)
   }
 }
