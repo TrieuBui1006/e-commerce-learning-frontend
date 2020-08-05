@@ -49,12 +49,24 @@ const Search = () => {
     setData({ ...data, [name]: event.target.value, searched: false })
   }
 
+  const searchMessage = (searched, results) => {
+    if (searched && results.length > 0) {
+      return `Found ${results.length} products`
+    }
+    if (searched && results.length < 1) {
+      return `No products found`
+    }
+  }
+
   const searchedProducts = (results = []) => (
-    <div className="row">
-      {results.map((p, i) => (
-        <Card key={i} product={p} />
-      ))}
-    </div>
+    <>
+      <h2 className="mt-4 mb-4">{searchMessage(searched, results)}</h2>
+      <div className="row">
+        {results.map((p, i) => (
+          <Card key={i} product={p} />
+        ))}
+      </div>
+    </>
   )
 
   const searchForm = (
