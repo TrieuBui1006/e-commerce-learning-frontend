@@ -41,7 +41,7 @@ export const list = async (params) => {
   console.log('query', query)
 
   try {
-    const response = await fetch(`${API}/products?${query}`, {
+    const response = await fetch(`${API}/products/search?${query}`, {
       method: 'GET',
     })
     return response.json()
