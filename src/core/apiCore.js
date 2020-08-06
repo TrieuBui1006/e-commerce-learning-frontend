@@ -49,3 +49,14 @@ export const list = async (params) => {
     return console.log(err)
   }
 }
+
+export const read = async (productId) => {
+  try {
+    const response = await fetch(`${API}/product/${productId}`, {
+      method: 'GET',
+    })
+    return response.json()
+  } catch (err) {
+    return console.log(err)
+  }
+}
