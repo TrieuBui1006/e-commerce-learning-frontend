@@ -21,6 +21,7 @@ const Product = (props) => {
   useEffect(() => {
     const productId = props.match.params.productId
     loadSingleProduct(productId)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
