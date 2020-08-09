@@ -87,3 +87,20 @@ export const getBraintreeClientToken = async (userId, token) => {
     return console.log(err)
   }
 }
+
+export const processPayment = async (userId, token, paymentData) => {
+  try {
+    const response = await fetch(`${API}/braintree/payment/${userId}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(paymentData),
+    })
+    return response.json()
+  } catch (err) {
+    return console.log(err)
+  }
+}
