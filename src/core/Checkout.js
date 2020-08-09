@@ -4,9 +4,11 @@ import DropIn from 'braintree-web-drop-in-react'
 
 import { isAuthenticated } from '../auth'
 import { getBraintreeClientToken, processPayment } from './apiCore'
+import { emptyCart } from './cartHelpers'
 
 const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
   const [data, setData] = useState({
+    loading: false,
     success: false,
     clientToken: null,
     error: '',
@@ -29,6 +31,7 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
 
   useEffect(() => {
     getToken(userId, token)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const getTotal = () => {
@@ -48,6 +51,7 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
   }
 
   const buy = () => {
+    setData({ loading: true })
     let nonce
     let getNonce = data.instance
       .requestPaymentMethod()
@@ -69,9 +73,15 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
           .then((response) => {
             // console.log(response)
             setData({ ...data, success: response.success })
+            emptyCart(() => {
+              setRun(!run)
+              console.log('payment success and empty cart')
+              setData({ loading: false })
+            })
           })
           .catch((error) => {
             console.log(error)
+            setData({ loading: false })
           })
       })
       .catch((error) => {
@@ -87,6 +97,9 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
           <DropIn
             options={{
               authorization: data.clientToken,
+              paypal: {
+                flow: 'vault',
+              },
             }}
             onInstance={(instance) => (data.instance = instance)}
           />
@@ -116,9 +129,12 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
     </div>
   )
 
+  const showLoading = (loading) => loading && <h2>Loading...</h2>
+
   return (
     <div>
       <h2>Total: ${getTotal()}</h2>
+      {showLoading(data.loading)}
       {showSuccess(data.success)}
       {showError(data.error)}
       {showCheckout()}
