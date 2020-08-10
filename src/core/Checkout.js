@@ -75,7 +75,7 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
               products: products,
               transaction_id: response.transaction.id,
               amount: response.transaction.amount,
-              adress: data.address,
+              address: data.address,
             }
 
             createOrder(userId, token, createOrderData)
