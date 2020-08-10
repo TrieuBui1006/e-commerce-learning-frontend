@@ -35,6 +35,7 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
   }, [])
 
   const handleAddress = (event) => {
+    // console.log(event.target.value)
     setData({ ...data, address: event.target.value })
   }
 
@@ -55,12 +56,12 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
   }
 
   const buy = () => {
-    setData({ loading: true })
+    setData({ ...data, loading: true })
     let nonce
     let getNonce = data.instance
       .requestPaymentMethod()
-      .then((data) => {
-        nonce = data.nonce
+      .then((response) => {
+        nonce = response.nonce
         const paymentData = {
           paymentMethodNonce: nonce,
           amount: getTotal(products),
@@ -72,19 +73,23 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
 
             const createOrderData = {
               products: products,
-              transaction_id: response.transaction_id,
+              transaction_id: response.transaction.id,
               amount: response.transaction.amount,
               adress: data.address,
             }
 
             createOrder(userId, token, createOrderData)
-
-            setData({ ...data, success: response.success })
-            emptyCart(() => {
-              setRun(!run)
-              console.log('payment success and empty cart')
-              setData({ loading: false })
-            })
+              .then((response) => {
+                emptyCart(() => {
+                  setRun(!run)
+                  console.log('payment success and empty cart')
+                  setData({ loading: false, success: true })
+                })
+              })
+              .catch((error) => {
+                console.log(error)
+                setData({ loading: false })
+              })
           })
           .catch((error) => {
             console.log(error)
