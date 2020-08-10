@@ -104,3 +104,20 @@ export const processPayment = async (userId, token, paymentData) => {
     return console.log(err)
   }
 }
+
+export const createOrder = async (userId, token, createOderData) => {
+  try {
+    const response = await fetch(`${API}/order/create/${userId}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(createOderData),
+    })
+    return response.json()
+  } catch (err) {
+    return console.log(err)
+  }
+}

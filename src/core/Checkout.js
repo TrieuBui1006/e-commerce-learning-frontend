@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import DropIn from 'braintree-web-drop-in-react'
 
 import { isAuthenticated } from '../auth'
-import { getBraintreeClientToken, processPayment } from './apiCore'
+import { getBraintreeClientToken, processPayment, createOrder } from './apiCore'
 import { emptyCart } from './cartHelpers'
 
 const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
@@ -13,7 +13,7 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
     clientToken: null,
     error: '',
     instance: {},
-    adress: '',
+    address: '',
   })
 
   const userId = isAuthenticated() && isAuthenticated().user._id
@@ -33,6 +33,10 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
     getToken(userId, token)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const handleAddress = (event) => {
+    setData({ ...data, address: event.target.value })
+  }
 
   const getTotal = () => {
     return products.reduce((currentValue, nextValue) => {
@@ -56,14 +60,7 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
     let getNonce = data.instance
       .requestPaymentMethod()
       .then((data) => {
-        // console.log(data)
         nonce = data.nonce
-
-        // console.log(
-        //   'send nonce and total to process:',
-        //   nonce,
-        //   getTotal(products)
-        // )
         const paymentData = {
           paymentMethodNonce: nonce,
           amount: getTotal(products),
@@ -72,6 +69,16 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
         processPayment(userId, token, paymentData)
           .then((response) => {
             // console.log(response)
+
+            const createOrderData = {
+              products: products,
+              transaction_id: response.transaction_id,
+              amount: response.transaction.amount,
+              adress: data.address,
+            }
+
+            createOrder(userId, token, createOrderData)
+
             setData({ ...data, success: response.success })
             emptyCart(() => {
               setRun(!run)
@@ -94,18 +101,29 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
     <div onBlur={() => setData({ ...data, error: '' })}>
       {data.clientToken !== null && products.length > 0 ? (
         <div>
-          <DropIn
-            options={{
-              authorization: data.clientToken,
-              paypal: {
-                flow: 'vault',
-              },
-            }}
-            onInstance={(instance) => (data.instance = instance)}
-          />
-          <button className="btn btn-success btn-block" onClick={buy}>
-            Pay
-          </button>
+          <div className="grom-group mb-3">
+            <label className="text-muted">Delivery address</label>
+            <textarea
+              onChange={handleAddress}
+              className="form-control"
+              value={data.address}
+              placeholder="Type your delivery address here ..."
+            />
+          </div>
+          <div>
+            <DropIn
+              options={{
+                authorization: data.clientToken,
+                paypal: {
+                  flow: 'vault',
+                },
+              }}
+              onInstance={(instance) => (data.instance = instance)}
+            />
+            <button className="btn btn-success btn-block" onClick={buy}>
+              Pay
+            </button>
+          </div>
         </div>
       ) : null}
     </div>
