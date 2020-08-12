@@ -97,7 +97,7 @@ export const updateStatusValues = async (userId, token, orderId, status) => {
 
 export const getProducts = async () => {
   try {
-    const response = await fetch(`${API}/products`, {
+    const response = await fetch(`${API}/products?limit=undefined`, {
       method: 'GET',
     })
     return response.json()
