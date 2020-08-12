@@ -28,13 +28,18 @@ const AdminDashboard = () => {
             View Orders
           </Link>
         </li>
+        <li className="list-group-item">
+          <Link className="nav-link" to="/admin/products">
+            Manage Products
+          </Link>
+        </li>
       </ul>
     </div>
   )
 
   const adminInfo = (
     <div className="card mb-5">
-      <h3 className="card-header">Adnin Information</h3>
+      <h3 className="card-header">Admin Information</h3>
       <ul className="list-group">
         <li className="list-group-item">
           <strong>Name: </strong>

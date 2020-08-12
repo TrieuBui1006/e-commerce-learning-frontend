@@ -92,3 +92,59 @@ export const updateStatusValues = async (userId, token, orderId, status) => {
     return console.log(err)
   }
 }
+
+// to perform curd on product
+
+export const getProducts = async () => {
+  try {
+    const response = await fetch(`${API}/products`, {
+      method: 'GET',
+    })
+    return response.json()
+  } catch (err) {
+    return console.log(err)
+  }
+}
+
+export const deleteProduct = async (productId, userId, token) => {
+  try {
+    const response = await fetch(`${API}/product/${productId}/${userId}`, {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.json()
+  } catch (err) {
+    return console.log(err)
+  }
+}
+
+export const getProduct = async (productId) => {
+  try {
+    const response = await fetch(`${API}/product/${productId}`, {
+      method: 'GET',
+    })
+    return response.json()
+  } catch (err) {
+    return console.log(err)
+  }
+}
+
+export const updateProduct = async (productId, userId, token, product) => {
+  try {
+    const response = await fetch(`${API}/product/${productId}/${userId}`, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: product,
+    })
+    return response.json()
+  } catch (err) {
+    return console.log(err)
+  }
+}
