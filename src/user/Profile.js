@@ -35,6 +35,7 @@ const Profile = ({ match }) => {
 
   useEffect(() => {
     init(match.params.userId)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleChange = (name) => (e) => {
@@ -46,7 +47,7 @@ const Profile = ({ match }) => {
     update(match.params.userId, token, { name, email, password }).then(
       (data) => {
         if (data.error) {
-          console.log(data.error)
+          setValues({ ...values, error: true })
         } else {
           updateUser(data, () => {
             setValues({
@@ -103,12 +104,22 @@ const Profile = ({ match }) => {
     </form>
   )
 
+  const showError = (
+    <div
+      className="alert alert-danger"
+      style={{ display: error ? '' : 'none' }}
+    >
+      Network Error
+    </div>
+  )
+
   return (
     <Layout
       title="Profile"
       description="Update your profile"
       className="container-fluid"
     >
+      {showError}
       <h2 className="mb-4">Profile update</h2>
       {profileUpdate(name, email, password)}
       {redirectUser(success)}

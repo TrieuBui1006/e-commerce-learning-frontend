@@ -14,7 +14,8 @@ const Shop = () => {
   })
   const [categories, setCategories] = useState([])
   const [error, setError] = useState(false)
-  const [limit, setLimit] = useState(6)
+  // const [limit, setLimit] = useState(6)
+  let limit = 6
   const [skip, setSkip] = useState(0)
   const [size, setSize] = useState(0)
   const [filteredResults, setFilteredResults] = useState([])
@@ -97,12 +98,22 @@ const Shop = () => {
     return array
   }
 
+  const showError = (
+    <div
+      className="alert alert-danger"
+      style={{ display: error ? '' : 'none' }}
+    >
+      {error}
+    </div>
+  )
+
   return (
     <Layout
       title="Shop Page"
       description="Search and find books of your choice"
       className="container-fluid"
     >
+      {showError}
       <div className="row">
         <div className="col-3">
           <h4>Filter by categories</h4>

@@ -26,6 +26,7 @@ const UserDashboard = () => {
 
   useEffect(() => {
     init(_id, token)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const userLinks = (

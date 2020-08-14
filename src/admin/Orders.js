@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Layout from '../core/Layout'
 import { isAuthenticated } from '../auth'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import {
   listOrders,
   getStatusValues,
@@ -38,6 +38,7 @@ const Orders = () => {
   useEffect(() => {
     loadOrders()
     loadStatusValues()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const showOrdersLength = (orders) => {

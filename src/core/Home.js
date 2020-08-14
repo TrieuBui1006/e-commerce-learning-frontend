@@ -29,6 +29,15 @@ const Home = () => {
     })
   }
 
+  const showError = (
+    <div
+      className="alert alert-danger"
+      style={{ display: error ? '' : 'none' }}
+    >
+      {error}
+    </div>
+  )
+
   useEffect(() => {
     loadProductsByArrival()
     loadProductsBySell()
@@ -40,6 +49,7 @@ const Home = () => {
       description="Node React E-Commerce"
       className="container-fluid"
     >
+      {showError}
       <Search />
       <h2 className="mb-4">New Arrivals</h2>
       <div className="row">
