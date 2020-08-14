@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react'
 import Layout from '../core/Layout'
 import { isAuthenticated } from '../auth'
 import { Link } from 'react-router-dom'
-import { listOrders, getStatusValues, updateStatusValues } from './apiAdmin'
+import {
+  listOrders,
+  getStatusValues,
+  updateStatusValues,
+} from '../api/apiAdmin'
 import moment from 'moment'
 
 const Orders = () => {

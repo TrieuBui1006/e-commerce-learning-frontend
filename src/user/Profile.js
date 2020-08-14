@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom'
 
 import Layout from '../core/Layout'
 import { isAuthenticated } from '../auth'
-import { read, update, updateUser } from './apiUser'
+import { read, update, updateUser } from '../api/apiUser'
 
 const Profile = ({ match }) => {
   const [values, setValues] = useState({

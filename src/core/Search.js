@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { getCategories } from '../admin/apiAdmin'
-import { list } from './apiCore'
+import { getCategories } from '../api/apiAdmin'
+import { list } from '../api/apiCore'
 import Card from './Card'
 
 const Search = () => {

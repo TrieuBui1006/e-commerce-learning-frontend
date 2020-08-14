@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Layout from './Layout'
-import { getCategories } from '../admin/apiAdmin'
-import { getFilteredProducts } from './apiCore'
+import { getCategories } from '../api/apiAdmin'
+import { getFilteredProducts } from '../api/apiCore'
 
 import Card from './Card'
 import Checkbox from './Checkbox'

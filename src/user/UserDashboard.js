@@ -4,7 +4,7 @@ import moment from 'moment'
 
 import Layout from '../core/Layout'
 import { isAuthenticated } from '../auth'
-import { getPurchaseHistory } from './apiUser'
+import { getPurchaseHistory } from '../api/apiUser'
 
 const UserDashboard = () => {
   const [history, setHistory] = useState([])

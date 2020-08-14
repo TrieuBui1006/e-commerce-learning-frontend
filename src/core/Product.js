@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Layout from './Layout'
-import { read, listRelated } from '../core/apiCore'
+import { read, listRelated } from '../api/apiCore'
 import Card from './Card'
 
 const Product = (props) => {
@@ -8,24 +8,6 @@ const Product = (props) => {
   const [relatedProduct, setRelatedProduct] = useState([])
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
-
-  // const loadSingleProduct = (productId) => {
-  //   read(productId).then((data) => {
-  //     if (data.error) {
-  //       setError(data.error)
-  //     } else {
-  //       setProduct(data)
-  //       //fetch related products
-  //       listRelated(data._id).then((data) => {
-  //         if (data.error) {
-  //           setError(data.error)
-  //         } else {
-  //           setRelatedProduct(data)
-  //         }
-  //       })
-  //     }
-  //   })
-  // }
 
   const loadSingleProduct = async (productId) => {
     setLoading(true)

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import Layout from '../core/Layout'
 import { isAuthenticated } from '../auth'
-import { createCategory } from './apiAdmin'
+import { createCategory } from '../api/apiAdmin'
 
 const AddCategory = () => {
   const [name, setName] = useState('')

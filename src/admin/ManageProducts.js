@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import Layout from '../core/Layout'
 import { isAuthenticated } from '../auth'
-import { getProducts, deleteProduct } from './apiAdmin'
+import { getProducts, deleteProduct } from '../api/apiAdmin'
 
 const ManageProducts = () => {
   const [products, setProducts] = useState([])

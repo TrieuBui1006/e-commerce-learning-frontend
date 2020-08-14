@@ -3,7 +3,11 @@ import { Link } from 'react-router-dom'
 import DropIn from 'braintree-web-drop-in-react'
 
 import { isAuthenticated } from '../auth'
-import { getBraintreeClientToken, processPayment, createOrder } from './apiCore'
+import {
+  getBraintreeClientToken,
+  processPayment,
+  createOrder,
+} from '../api/apiCore'
 import { emptyCart } from './cartHelpers'
 
 const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {

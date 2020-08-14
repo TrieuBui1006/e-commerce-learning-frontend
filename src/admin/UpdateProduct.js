@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Layout from '../core/Layout'
 import { isAuthenticated } from '../auth'
 import { Link } from 'react-router-dom'
-import { getProduct, getCategories, updateProduct } from './apiAdmin'
+import { getProduct, getCategories, updateProduct } from '../api/apiAdmin'
 
 const UpdateProduct = ({ match }) => {
   const [values, setValues] = useState({
