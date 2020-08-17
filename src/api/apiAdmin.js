@@ -148,3 +148,19 @@ export const updateProduct = async (productId, userId, token, product) => {
     return console.log(err)
   }
 }
+
+export const uploadAuhthorImage = async (userId, token, file) => {
+  try {
+    const res = await fetch(`${API}/author/upload/${userId}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: file,
+    })
+    return res.json()
+  } catch (err) {
+    console.log(err)
+  }
+}
