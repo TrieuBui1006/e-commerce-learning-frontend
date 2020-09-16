@@ -18,23 +18,6 @@ export const createCategory = async (userId, token, category) => {
   }
 }
 
-export const createProduct = async (userId, token, product) => {
-  // console.log(name, email, password)
-  try {
-    const res = await fetch(`${API}/product/create/${userId}`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: product,
-    })
-    return res.json()
-  } catch (err) {
-    console.log(err)
-  }
-}
-
 export const getCategories = async () => {
   try {
     const response = await fetch(`${API}/categories`, {
@@ -95,6 +78,23 @@ export const updateStatusValues = async (userId, token, orderId, status) => {
 
 // to perform curd on product
 
+export const createProduct = async (userId, token, product) => {
+  // console.log(name, email, password)
+  try {
+    const res = await fetch(`${API}/product/create/${userId}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: product,
+    })
+    return res.json()
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 export const getProducts = async () => {
   try {
     const response = await fetch(`${API}/products?limit=undefined`, {
@@ -146,6 +146,26 @@ export const updateProduct = async (productId, userId, token, product) => {
     return response.json()
   } catch (err) {
     return console.log(err)
+  }
+}
+
+// Author CRUD
+
+export const createAuthor = async (userId, token, author) => {
+  console.log(author)
+  try {
+    const res = await fetch(`${API}/author/create/${userId}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(author),
+    })
+    return res.json()
+  } catch (err) {
+    console.log(err)
   }
 }
 

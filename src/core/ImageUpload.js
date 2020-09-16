@@ -62,7 +62,7 @@ function ImageUpload({ refreshFunction, userId, token }) {
         }}
       >
         {images.map((image, index) => (
-          <div onClick={() => onDelete(image)}>
+          <div onClick={() => onDelete(image)} key={index}>
             <img
               style={{ minWidth: '300px', width: '300px', height: '240px' }}
               src={image.url}
